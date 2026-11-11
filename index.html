@@ -2,74 +2,466 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101014">
-  <title>SYAZYT CLIP AI — Crea clips de tus videos</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#080d0a">
+  <title>SYAZYT CLIP AI — Edición local</title>
   <style>
-    :root{color-scheme:dark;--bg:#101014;--panel:#19191f;--line:#303039;--text:#f7f7fb;--muted:#a6a6b3;--purple:#a78bfa;--lime:#c5f36b}
+    :root{color-scheme:dark;--bg:#080d0a;--panel:#111a14;--panel2:#0c130f;--line:#26372b;--text:#f4f8f4;--muted:#9eb1a2;--green:#20d66b;--lime:#c9f36a;--purple:#a78bfa}
     *{box-sizing:border-box}
-    body{margin:0;background:radial-gradient(ellipse at 80% 0,#292044 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
-    .wrap{width:min(1050px,92%);margin:auto}
-    header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff16}
-    .brand{font-weight:850;letter-spacing:.08em}.brand span{color:var(--purple)}
-    .tag{border:1px solid var(--line);border-radius:30px;padding:7px 12px;color:var(--muted);font-size:13px}
-    main{padding:72px 0 50px}
-    .eyebrow{color:var(--lime);text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:750}
-    h1{font-size:clamp(42px,8vw,76px);line-height:1.02;letter-spacing:-.055em;max-width:760px;margin:16px 0}
-    h1 span{color:var(--purple)}
-    .intro{color:var(--muted);font-size:18px;max-width:620px}
-    .studio{margin-top:42px;padding:24px;background:#19191fdc;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 80px #0005}
-    .studio-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}
-    h2{font-size:20px;margin:0}.status{font-size:12px;color:#e6cf79;background:#e6cf7918;padding:6px 10px;border-radius:20px}
-    .drop{display:block;padding:28px 18px;border:1px dashed #555461;border-radius:16px;text-align:center;background:#111116;cursor:pointer}
-    .drop:hover{border-color:var(--purple)}.icon{font-size:34px}.drop strong{display:block;margin:8px 0 3px}.hint,.fine{color:var(--muted);font-size:13px}
-    input[type=file]{position:absolute;width:1px;height:1px;opacity:0}
-    .controls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
-    label.option{font-size:13px;color:var(--muted)}select{display:block;width:100%;margin-top:7px;padding:12px;background:#111116;color:var(--text);border:1px solid var(--line);border-radius:10px;font:inherit}
-    button{width:100%;padding:14px;border:0;border-radius:11px;background:#55535e;color:#c6c5cc;font:700 15px inherit}
-    .notice{margin:16px 0 0;padding:14px;border-radius:12px;background:#a78bfa12;color:#d9cdfc;font-size:13px}
-    footer{padding:28px 0 40px;border-top:1px solid #ffffff16;color:var(--muted);font-size:13px}
-    @media(max-width:600px){main{padding-top:48px}.studio{padding:17px}.controls{grid-template-columns:1fr}.tag{font-size:11px}}
+    body{margin:0;background:radial-gradient(ellipse at 88% 4%,#163322 0,transparent 33%),var(--bg);color:var(--text);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+    .wrap{width:min(1040px,92%);margin:auto}
+    header{height:72px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ffffff18}
+    .brand{font-size:19px;font-weight:900;letter-spacing:.08em}.brand span{color:var(--green)}
+    .badge{border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}
+    main{padding:48px 0 42px}
+    .eyebrow{color:var(--lime);font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+    h1{font-size:clamp(38px,7vw,66px);line-height:1.02;letter-spacing:-.05em;margin:12px 0}
+    h1 span{color:var(--green)}
+    .intro{max-width:670px;color:var(--muted);font-size:17px}
+    .privacy{display:flex;gap:10px;align-items:flex-start;margin:22px 0 0;padding:13px 15px;border:1px solid #20d66b44;border-radius:12px;background:#20d66b0d;color:#cde9d5;font-size:13px}
+    .privacy strong{color:var(--green)}
+    .studio{margin-top:24px;padding:22px;background:#111a14ed;border:1px solid var(--line);border-radius:20px;box-shadow:0 20px 70px #0006}
+    .studio-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:18px}
+    h2{font-size:19px;margin:0}.state{color:#e7d48b;background:#e7d48b14;border-radius:99px;padding:5px 10px;font-size:11px}
+    .drop{display:block;padding:22px 15px;border:1px dashed #52675a;border-radius:15px;text-align:center;background:var(--panel2);cursor:pointer}
+    .drop:hover{border-color:var(--green)}.icon{font-size:30px;color:var(--green)}.drop strong{display:block;margin:5px}
+    .hint{display:block;color:var(--muted);font-size:12px}
+    input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+    .fileinfo{margin-top:10px;color:var(--muted);font-size:12px}
+    video{display:block;width:100%;max-height:330px;margin-top:14px;border-radius:12px;background:#000}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    label.option{font-size:12px;color:var(--muted)}
+    select,input[type=text]{display:block;width:100%;margin-top:6px;padding:11px;background:#0b110d;color:var(--text);border:1px solid var(--line);border-radius:9px;font:inherit}
+    .checks{display:flex;gap:18px;flex-wrap:wrap;margin:16px 0;color:var(--muted);font-size:13px}
+    .checks label{display:flex;align-items:center;gap:7px}.checks input{accent-color:var(--green)}
+    .actions{display:flex;gap:10px;align-items:center}
+    button{font:700 14px inherit}
+    .primary{width:100%;border:0;border-radius:10px;padding:13px;background:var(--green);color:#061009;cursor:pointer}
+    .primary:hover{background:#42e782}.primary:disabled{background:#344439;color:#93a396;cursor:not-allowed}
+    .statusbox{margin-top:13px;min-height:22px;color:#cde9d5;font-size:13px}
+    progress{width:100%;height:8px;accent-color:var(--green)}
+    .results{display:grid;gap:10px;margin-top:14px}
+    .result{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}
+    .result-row{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .result strong{font-size:13px}.result p{margin:5px 0;color:var(--muted);font-size:12px}
+    .download{color:#07120a;background:var(--green);border-radius:8px;padding:8px 11px;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap}
+    .secondary{display:inline-block;color:#d9f2df;background:#1a3523;border:1px solid #315c3c;border-radius:8px;padding:7px 10px;text-decoration:none;font-size:12px}
+    .notice{margin-top:18px;padding:13px 15px;border-radius:12px;background:#a78bfa12;color:#d9cdfc;font-size:12px}
+    .notice strong{color:#c5afff}
+    footer{padding:22px 0 34px;border-top:1px solid #ffffff18;color:var(--muted);font-size:12px}
+    @media(max-width:640px){main{padding-top:38px}.studio{padding:16px}.grid{grid-template-columns:1fr}.studio-head{align-items:flex-start;flex-direction:column}.result-row{align-items:flex-start;flex-direction:column}.download{display:inline-block}}
   </style>
 </head>
 <body>
   <header class="wrap">
     <div class="brand">SYAZYT <span>CLIP AI</span></div>
-    <div class="tag">ESTUDIO DE CLIPS</div>
+    <div class="badge">PROCESAMIENTO EN TU DISPOSITIVO</div>
   </header>
   <main class="wrap">
-    <div class="eyebrow">De video largo a momentos inolvidables</div>
-    <h1>Tus mejores momentos.<br><span>En clips.</span></h1>
-    <p class="intro">Prepara tus videos para crear clips verticales o panorámicos. Estamos construyendo el motor de inteligencia artificial.</p>
+    <div class="eyebrow">Sin subir el video · sin dejar tu PC encendida</div>
+    <h1>Encuentra el momento.<br><span>Crea el clip.</span></h1>
+    <p class="intro">Esta versión analiza el audio y exporta clips directamente en el navegador que abras. El archivo de video permanece en tu dispositivo.</p>
+    <div class="privacy"><span>●</span><div><strong>Privado y local:</strong> no se envía tu video a SYAZYT ni se guarda en un servidor. El navegador sí descarga una vez el modelo de transcripción y el motor de edición.</div></div>
 
     <section class="studio" aria-labelledby="studio-title">
-      <div class="studio-head">
-        <h2 id="studio-title">Prueba el estudio</h2>
-        <span class="status">Versión inicial</span>
-      </div>
-      <label class="drop" for="video">
-        <span class="icon">＋</span>
-        <strong>Selecciona un video</strong>
-        <span class="hint" id="filename">MP4, MOV o MKV · hasta 100 MB</span>
+      <div class="studio-head"><h2 id="studio-title">Centro de creación</h2><span class="state">MVP local gratuito</span></div>
+      <label class="drop" for="videoFile">
+        <span class="icon">＋</span><strong>Selecciona un video de este dispositivo</strong>
+        <span class="hint">MP4, MOV, WebM o MKV · máximo 100 MB y 5 minutos</span>
       </label>
-      <input id="video" type="file" accept="video/mp4,video/quicktime,video/x-matroska,video/*">
-      <div class="controls">
-        <label class="option">Formato de salida
-          <select><option>Vertical · 9:16</option><option>Panorámico · 16:9</option><option>Cuadrado · 1:1</option></select>
+      <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/webm,video/x-matroska,video/*">
+      <div id="fileInfo" class="fileinfo">Todavía no has seleccionado un video.</div>
+      <video id="sourceVideo" controls playsinline hidden></video>
+
+      <div class="grid">
+        <label class="option">Duración de cada clip
+          <select id="clipDuration"><option value="30">30 segundos</option><option value="45">45 segundos</option><option value="60">60 segundos</option><option value="90">90 segundos</option></select>
         </label>
-        <label class="option">Cantidad de clips
-          <select><option>3 clips</option><option>5 clips</option><option>10 clips</option></select>
+        <label class="option">Formato
+          <select id="aspect"><option value="vertical">Vertical · 9:16</option><option value="horizontal">Horizontal · 16:9</option><option value="square">Cuadrado · 1:1</option></select>
+        </label>
+        <label class="option">Cuántos clips crear
+          <select id="clipCount"><option value="3">3 momentos</option><option value="5">5 momentos</option></select>
         </label>
       </div>
-      <button type="button" disabled>El procesamiento estará disponible próximamente</button>
-      <p class="notice">Tu video se queda en tu dispositivo en esta versión. La subida segura y el procesamiento con IA aún no están conectados.</p>
+      <label class="option" style="display:block;margin-top:14px">Palabras o momentos que quieres priorizar
+        <input id="focusTerms" type="text" placeholder="victoria, eliminación, risa">
+      </label>
+      <div class="checks">
+        <label><input id="captions" type="checkbox" checked> Subtítulos quemados en el clip</label>
+        <label><input id="styleYellow" type="checkbox"> Subtítulos amarillos</label>
+      </div>
+      <div class="actions"><button id="analyze" class="primary" disabled>Selecciona un video para empezar</button></div>
+      <div id="status" class="statusbox" role="status" aria-live="polite">Listo cuando selecciones un video.</div>
+      <progress id="progress" max="100" value="0" hidden></progress>
+      <div id="results" class="results"></div>
+      <div class="notice"><strong>Qué hace esta primera versión:</strong> transcribe en español, ordena momentos por palabras y señales de audio, y exporta clips con recorte centrado y subtítulos. En móviles el proceso puede tardar; mantén esta página abierta. La importación de YouTube, el seguimiento facial y los videos de apoyo aún no están conectados.</div>
     </section>
   </main>
-  <footer class="wrap">SYAZYT CLIP AI · Sitio en desarrollo</footer>
-  <script>
-    document.getElementById("video").addEventListener("change", function () {
-      document.getElementById("filename").textContent =
-        this.files.length ? this.files[0].name + " · seleccionado en este dispositivo" : "MP4, MOV o MKV · hasta 100 MB";
+  <footer class="wrap">SYAZYT CLIP AI · El análisis y la exportación ocurren en este navegador.</footer>
+
+  <script type="module">
+    const $ = function(id){ return document.getElementById(id); };
+    const fileInput = $("videoFile");
+    const video = $("sourceVideo");
+    const fileInfo = $("fileInfo");
+    const analyzeButton = $("analyze");
+    const statusBox = $("status");
+    const progress = $("progress");
+    const resultsBox = $("results");
+    const MAX_BYTES = 100 * 1024 * 1024;
+    const MAX_SECONDS = 300;
+    const MODEL_ID = "Xenova/whisper-tiny";
+    const keywordList = ["increíble","no puede ser","vamos","ganamos","victoria","mira","escucha","brutal","épico","maté","eliminé","headshot","jajaja","dios","wow","imposible","nooo","perfecto","campeón","perdimos","sorpresa","ayuda","clip this","corta este clip","marca este momento","clipéalo","clip it"];
+    let selectedFile = null;
+    let sourceUrl = null;
+    let audioContext = null;
+    let audioSource = null;
+    let audioDestination = null;
+    let transcriberPromise = null;
+    let transcript = [];
+    let busy = false;
+
+    function setStatus(text, value) {
+      statusBox.textContent = text;
+      if (typeof value === "number") {
+        progress.hidden = false;
+        progress.value = Math.max(0, Math.min(100, value));
+      }
+    }
+    function formatTime(seconds) {
+      const s = Math.max(0, Math.floor(seconds || 0));
+      return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+    }
+    function setBusy(value) {
+      busy = value;
+      analyzeButton.disabled = value || !selectedFile;
+      if (value) analyzeButton.textContent = "Procesando en este dispositivo…";
+      else analyzeButton.textContent = selectedFile ? "Analizar y crear clips localmente" : "Selecciona un video para empezar";
+    }
+    function mediaRecorderType(audioOnly) {
+      const types = audioOnly
+        ? ["audio/webm;codecs=opus","audio/mp4","audio/webm"]
+        : ['video/mp4;codecs="avc1.42E01E,mp4a.40.2"',"video/mp4","video/webm;codecs=vp9,opus","video/webm;codecs=vp8,opus","video/webm"];
+      if (!window.MediaRecorder) throw new Error("Este navegador no ofrece MediaRecorder. Prueba con Safari reciente, Chrome o Edge.");
+      return types.find(function(type){ return MediaRecorder.isTypeSupported(type); }) || "";
+    }
+    function chooseWebGPU() {
+      return !!(navigator.gpu && window.isSecureContext);
+    }
+    async function loadTranscriber() {
+      if (transcriberPromise) return transcriberPromise;
+      transcriberPromise = (async function(){
+        const module = await import("https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1");
+        module.env.allowLocalModels = false;
+        module.env.useBrowserCache = true;
+        const report = function(info) {
+          if (info && info.status === "progress" && typeof info.progress === "number") {
+            setStatus("Descargando modelo de voz (" + Math.round(info.progress) + "%)…", 8 + info.progress * 0.25);
+          }
+        };
+        if (chooseWebGPU()) {
+          try {
+            setStatus("Preparando Whisper en la GPU de este dispositivo…", 10);
+            return await module.pipeline("automatic-speech-recognition", MODEL_ID, {device:"webgpu",dtype:"q8",progress_callback:report});
+          } catch (error) {
+            setStatus("WebGPU no está disponible aquí; usaré el procesador del dispositivo…", 10);
+          }
+        }
+        return await module.pipeline("automatic-speech-recognition", MODEL_ID, {device:"wasm",dtype:"q8",progress_callback:report});
+      })().catch(function(error){ transcriberPromise = null; throw error; });
+      return transcriberPromise;
+    }
+    async function prepareAudioGraph() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) throw new Error("Este navegador no incluye las herramientas de audio necesarias.");
+      if (!audioContext) {
+        audioContext = new AudioContextClass();
+        audioSource = audioContext.createMediaElementSource(video);
+        audioDestination = audioContext.createMediaStreamDestination();
+        audioSource.connect(audioDestination);
+        audioSource.connect(audioContext.destination);
+      }
+      await audioContext.resume();
+    }
+    function recordAudio() {
+      return new Promise(async function(resolve,reject){
+        try {
+          await prepareAudioGraph();
+          const type = mediaRecorderType(true);
+          const recorder = type ? new MediaRecorder(audioDestination.stream,{mimeType:type}) : new MediaRecorder(audioDestination.stream);
+          const chunks = [];
+          let settled = false;
+          function finish(error) {
+            if (settled) return;
+            settled = true;
+            video.pause();
+            if (error) reject(error);
+            else resolve(new Blob(chunks,{type:recorder.mimeType || "audio/webm"}));
+          }
+          recorder.ondataavailable = function(event){ if(event.data && event.data.size) chunks.push(event.data); };
+          recorder.onerror = function(){ finish(new Error("No pude capturar el audio de este video.")); };
+          recorder.onstop = function(){ finish(null); };
+          video.currentTime = 0;
+          await new Promise(function(ok,fail){
+            if (video.readyState >= 2) ok();
+            else {
+              video.addEventListener("loadeddata",ok,{once:true});
+              video.addEventListener("error",function(){fail(new Error("No pude abrir el video en este navegador."));},{once:true});
+            }
+          });
+          recorder.start(500);
+          video.onended = function(){ if(recorder.state !== "inactive") recorder.stop(); };
+          await video.play();
+          setStatus("Escuchando el video para transcribirlo… mantén la página abierta.", 28);
+        } catch(error) { reject(error); }
+      });
+    }
+    async function transcribeAudio(audioBlob) {
+      const pipe = await loadTranscriber();
+      const audioUrl = URL.createObjectURL(audioBlob);
+      try {
+        setStatus("Transcribiendo en este dispositivo…", 42);
+        const output = await pipe(audioUrl,{language:"spanish",return_timestamps:true});
+        const chunks = (output && output.chunks ? output.chunks : []).map(function(item){
+          const time = item.timestamp || [0,0];
+          return {start:Number(time[0]) || 0,end:Number(time[1]) || 0,text:String(item.text || "").trim()};
+        }).filter(function(item){ return item.text && item.end >= item.start; });
+        return chunks.length ? chunks : [{start:0,end:video.duration,text:String(output.text || "").trim()}].filter(function(item){return item.text;});
+      } finally { URL.revokeObjectURL(audioUrl); }
+    }
+    async function findAudioMoments(audioBlob) {
+      try {
+        const buffer = await audioContext.decodeAudioData(await audioBlob.arrayBuffer());
+        const data = buffer.getChannelData(0);
+        const rate = buffer.sampleRate;
+        const windowSize = Math.floor(rate * 3);
+        const hop = Math.floor(rate);
+        const values = [];
+        for (let offset=0; offset + windowSize <= data.length; offset += hop) {
+          let sum=0;
+          for(let i=offset;i<offset+windowSize;i+=4) sum += data[i]*data[i];
+          const rms=Math.sqrt(sum / Math.ceil(windowSize/4));
+          values.push({center:(offset + windowSize/2)/rate,rms:rms});
+        }
+        if(!values.length) return [];
+        const sorted=values.map(function(x){return x.rms;}).sort(function(a,b){return a-b;});
+        const baseline=Math.max(sorted[Math.floor(sorted.length*.55)] || 0,0.003);
+        const cutoff=Math.max(sorted[Math.floor(sorted.length*.85)] || 0,baseline*1.8);
+        return values.filter(function(x){return x.rms>=cutoff && x.rms/baseline>=1.8;}).map(function(x){
+          return {start:x.center,text:"Momento de audio intenso",score:Math.min(88,48+Math.round((x.rms/baseline-1.8)*8))};
+        });
+      } catch(error) { return []; }
+    }
+    function scoreText(text, focusTerms) {
+      const lower=text.toLowerCase();
+      const words=lower.split(/\s+/).filter(Boolean);
+      if(!words.length) return 0;
+      const hits=keywordList.reduce(function(total,word){return total+(lower.includes(word)?1:0);},0);
+      const focusHits=focusTerms.reduce(function(total,term){return total+(term && lower.includes(term)?1:0);},0);
+      const score=35+Math.min(hits*7,35)+Math.min(focusHits*12,36)+Math.min(words.length*1.5,20)+Math.min((text.match(/!/g)||[]).length*3,10);
+      return Math.min(100,Math.round(score));
+    }
+    function selectCandidates(audioMoments,durationSeconds,requestedCount) {
+      const clipLength=Number($("clipDuration").value);
+      const focusTerms=$("focusTerms").value.toLowerCase().split(/[;,]/).map(function(x){return x.trim();}).filter(Boolean);
+      const candidates=[];
+      transcript.forEach(function(item){
+        if(!item.text) return;
+        const start=Math.max(0,Math.min(item.start-clipLength*.35,Math.max(0,durationSeconds-clipLength)));
+        candidates.push({start:start,score:scoreText(item.text,focusTerms),text:item.text});
+      });
+      audioMoments.forEach(function(item){
+        const start=Math.max(0,Math.min(item.start-clipLength*.35,Math.max(0,durationSeconds-clipLength)));
+        candidates.push({start:start,score:item.score,text:item.text});
+      });
+      if(!candidates.length) candidates.push({start:0,score:35,text:"Fragmento inicial del video"});
+      candidates.sort(function(a,b){return b.score-a.score;});
+      const selected=[];
+      for(const candidate of candidates) {
+        const overlaps=selected.some(function(item){return Math.abs(candidate.start-item.start)<clipLength*.7;});
+        if(!overlaps) selected.push(candidate);
+        if(selected.length>=requestedCount) break;
+      }
+      return selected;
+    }
+    function wrapLines(ctx,text,maxWidth,maxLines) {
+      const words=String(text||"").split(/\s+/);
+      const lines=[]; let line="";
+      words.forEach(function(word){
+        const test=line ? line+" "+word : word;
+        if(ctx.measureText(test).width>maxWidth && line) { lines.push(line); line=word; }
+        else line=test;
+      });
+      if(line) lines.push(line);
+      if(lines.length>maxLines) {
+        lines.length=maxLines;
+        lines[maxLines-1]=lines[maxLines-1].replace(/[.,!?]?$/,"…");
+      }
+      return lines;
+    }
+    function drawFrame(ctx,canvas,clipStart,candidate,format) {
+      const sw=video.videoWidth, sh=video.videoHeight;
+      if(!sw || !sh) return;
+      const ratio=canvas.width/canvas.height;
+      const sourceRatio=sw/sh;
+      let sx=0,sy=0,cw=sw,ch=sh;
+      if(sourceRatio>ratio){cw=sh*ratio;sx=(sw-cw)/2;}
+      else {ch=sw/ratio;sy=(sh-ch)/2;}
+      ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.drawImage(video,sx,sy,cw,ch,0,0,canvas.width,canvas.height);
+      const localTime=video.currentTime-clipStart;
+      const captionsOn=$("captions").checked;
+      if(localTime<2.5) {
+        const hook=String(candidate.text||"Momento destacado").replace(/\s+/g," ").slice(0,64);
+        ctx.font="800 "+Math.max(18,Math.round(canvas.width*.045))+"px system-ui,sans-serif";
+        const lines=wrapLines(ctx,hook,canvas.width*.82,2);
+        ctx.textAlign="center";ctx.textBaseline="middle";
+        const top=canvas.height*.10;
+        lines.forEach(function(line,index){
+          const y=top+index*Math.max(24,canvas.width*.055);
+          const w=ctx.measureText(line).width+24;
+          ctx.fillStyle="rgba(0,0,0,.62)";ctx.fillRect((canvas.width-w)/2,y-16,w,32);
+          ctx.fillStyle="#fff";ctx.fillText(line,canvas.width/2,y);
+        });
+      }
+      if(captionsOn) {
+        const active=transcript.find(function(item){return item.start<=video.currentTime && item.end>=video.currentTime;});
+        if(active) {
+          ctx.font="800 "+Math.max(20,Math.round(canvas.width*.052))+"px system-ui,sans-serif";
+          const lines=wrapLines(ctx,active.text,canvas.width*.82,2);
+          const lineHeight=Math.max(26,canvas.width*.06);
+          const y0=canvas.height*.82-(lines.length-1)*lineHeight/2;
+          lines.forEach(function(line,index){
+            const y=y0+index*lineHeight;
+            ctx.textAlign="center";ctx.textBaseline="middle";
+            const w=ctx.measureText(line).width+24;
+            ctx.fillStyle=$("styleYellow").checked?"rgba(12,14,12,.72)":"rgba(0,0,0,.72)";
+            ctx.fillRect((canvas.width-w)/2,y-lineHeight*.48,w,lineHeight*.96);
+            ctx.fillStyle=$("styleYellow").checked?"#ffe45c":"#ffffff";
+            ctx.fillText(line,canvas.width/2,y);
+          });
+        }
+      }
+      ctx.fillStyle="#20d66b";ctx.font="800 "+Math.max(13,Math.round(canvas.width*.025))+"px system-ui,sans-serif";
+      ctx.textAlign="right";ctx.textBaseline="bottom";ctx.fillText("SYAZYT",canvas.width-14,canvas.height-12);
+    }
+    function exportClip(candidate,index) {
+      return new Promise(async function(resolve,reject){
+        try {
+          const clipLength=Math.min(Number($("clipDuration").value),video.duration-candidate.start);
+          const format=$("aspect").value;
+          const canvas=document.createElement("canvas");
+          if(format==="vertical"){canvas.width=720;canvas.height=1280;}
+          else if(format==="square"){canvas.width=720;canvas.height=720;}
+          else {canvas.width=1280;canvas.height=720;}
+          const ctx=canvas.getContext("2d",{alpha:false});
+          const canvasStream=canvas.captureStream(30);
+          const audioTracks=audioDestination.stream.getAudioTracks().map(function(track){return track.clone();});
+          const stream=new MediaStream(canvasStream.getVideoTracks().concat(audioTracks));
+          const type=mediaRecorderType(false);
+          const recorder=type?new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:3_000_000}):new MediaRecorder(stream);
+          const pieces=[];
+          let stopped=false;
+          function finish(error) {
+            if(stopped) return;
+            stopped=true;
+            video.pause();
+            canvasStream.getTracks().forEach(function(track){track.stop();});
+            stream.getTracks().forEach(function(track){track.stop();});
+            if(error) reject(error);
+            else {
+              const blob=new Blob(pieces,{type:recorder.mimeType||"video/webm"});
+              resolve({blob:blob,extension:blob.type.includes("mp4")?"mp4":"webm",start:candidate.start,score:candidate.score,text:candidate.text,index:index});
+            }
+          }
+          recorder.ondataavailable=function(event){if(event.data&&event.data.size)pieces.push(event.data);};
+          recorder.onerror=function(){finish(new Error("El navegador no pudo exportar el clip."));};
+          recorder.onstop=function(){finish(null);};
+          video.pause();
+          video.currentTime=candidate.start;
+          await new Promise(function(ok,fail){
+            if(Math.abs(video.currentTime-candidate.start)<.05 && video.readyState>=2) ok();
+            else {
+              video.addEventListener("seeked",ok,{once:true});
+              video.addEventListener("error",function(){fail(new Error("No pude mover el video al momento elegido."));},{once:true});
+            }
+          });
+          drawFrame(ctx,canvas,candidate.start,candidate,format);
+          recorder.start(250);
+          await video.play();
+          function paint() {
+            if(stopped) return;
+            drawFrame(ctx,canvas,candidate.start,candidate,format);
+            if(video.currentTime>=candidate.start+clipLength || video.ended) {
+              video.pause();
+              if(recorder.state!=="inactive") recorder.stop();
+              return;
+            }
+            requestAnimationFrame(paint);
+          }
+          requestAnimationFrame(paint);
+          setTimeout(function(){if(!stopped&&recorder.state!=="inactive")recorder.stop();},Math.ceil((clipLength+3)*1000));
+        } catch(error) { reject(error); }
+      });
+    }
+    function renderResults(clips) {
+      resultsBox.replaceChildren();
+      clips.forEach(function(clip){
+        const url=URL.createObjectURL(clip.blob);
+        const card=document.createElement("article");card.className="result";
+        const row=document.createElement("div");row.className="result-row";
+        const info=document.createElement("div");
+        const title=document.createElement("strong");title.textContent="Clip "+clip.index+" · "+formatTime(clip.start)+" · "+clip.score+"/100";
+        const summary=document.createElement("p");summary.textContent=clip.text;
+        info.append(title,summary);
+        const link=document.createElement("a");link.className="download";link.href=url;link.download="SYAZYT_CLIP_"+clip.index+"."+clip.extension;link.textContent="Descargar "+clip.extension.toUpperCase();
+        row.append(info,link);card.append(row);resultsBox.append(card);
+      });
+    }
+    fileInput.addEventListener("change",function(){
+      resultsBox.replaceChildren();progress.hidden=true;progress.value=0;
+      const file=fileInput.files && fileInput.files[0];
+      if(!file) return;
+      if(file.size>MAX_BYTES){selectedFile=null;analyzeButton.disabled=true;fileInfo.textContent="El archivo supera 100 MB. Elige uno más pequeño para proteger la memoria del teléfono.";return;}
+      selectedFile=file;
+      if(sourceUrl) URL.revokeObjectURL(sourceUrl);
+      sourceUrl=URL.createObjectURL(file);video.src=sourceUrl;video.hidden=false;video.load();
+      fileInfo.textContent=file.name+" · "+(file.size/1024/1024).toFixed(1)+" MB · comprobando duración…";
+      analyzeButton.disabled=true;
+      video.onloadedmetadata=function(){
+        const duration=video.duration;
+        fileInfo.textContent=file.name+" · "+(file.size/1024/1024).toFixed(1)+" MB · "+formatTime(duration);
+        if(duration>MAX_SECONDS){
+          selectedFile=null;fileInfo.textContent+=" · supera el límite de 5 minutos";
+          analyzeButton.disabled=true;statusBox.textContent="Prueba primero con un video de 5 minutos o menos.";return;
+        }
+        if(!isFinite(duration)||duration<5){selectedFile=null;analyzeButton.disabled=true;statusBox.textContent="El video debe durar al menos 5 segundos.";return;}
+        analyzeButton.disabled=false;analyzeButton.textContent="Analizar y crear clips localmente";statusBox.textContent="Video listo. Al comenzar, se transcribirá en este dispositivo.";
+      };
+      video.onerror=function(){selectedFile=null;analyzeButton.disabled=true;statusBox.textContent="Este formato no se puede abrir en este navegador. Prueba MP4 o MOV.";};
+    });
+    analyzeButton.addEventListener("click",async function(){
+      if(!selectedFile||busy)return;
+      setBusy(true);resultsBox.replaceChildren();transcript=[];
+      try {
+        if(!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) throw new Error("Este navegador no tiene las funciones de grabación necesarias. Prueba Safari reciente, Chrome o Edge.");
+        mediaRecorderType(false);
+        const audioBlob=await recordAudio();
+        transcript=await transcribeAudio(audioBlob);
+        const audioMoments=await findAudioMoments(audioBlob);
+        setStatus("Buscando los momentos más fuertes…",72);
+        const candidates=selectCandidates(audioMoments,video.duration,Number($("clipCount").value));
+        const clips=[];
+        for(let i=0;i<candidates.length;i++){
+          setStatus("Exportando clip "+(i+1)+" de "+candidates.length+"… mantén la página abierta.",78+(i/candidates.length)*20);
+          clips.push(await exportClip(candidates[i],i+1));
+        }
+        renderResults(clips);
+        setStatus("Listo: "+clips.length+" clips creados. Descárgalos antes de cerrar esta página.",100);
+      } catch(error) {
+        setStatus("No pude completar el análisis: "+(error&&error.message?error.message:String(error)),0);
+      } finally { setBusy(false); }
     });
   </script>
 </body>
