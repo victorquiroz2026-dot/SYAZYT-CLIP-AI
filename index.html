@@ -465,4 +465,46 @@
     });
   </script>
 </body>
+<script>
+(function(){
+  const KEY="syazyt-free-clip-usage-v1";
+  const LIMIT=1;
+  const button=document.getElementById("analyze");
+  const status=document.getElementById("status");
+  const video=document.getElementById("sourceVideo");
+  const count=document.getElementById("clipCount");
+  const studio=document.querySelector(".studio");
+  if(!button||!status||!studio)return;
+  const day=function(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+  const used=function(){try{const u=JSON.parse(localStorage.getItem(KEY)||"{}");return u.day===day()?Math.max(0,Number(u.count)||0):0;}catch(e){return 0;}};
+  const banner=document.createElement("div");
+  banner.setAttribute("role","status");
+  banner.setAttribute("aria-live","polite");
+  banner.style.cssText="margin:0 0 15px;padding:11px 13px;border:1px solid #20d66b66;border-radius:10px;background:#20d66b12;color:#cde9d5;font-size:13px";
+  studio.querySelector(".studio-head").after(banner);
+  if(count){count.replaceChildren(new Option("1 clip gratis","1"));count.value="1";}
+  const membership=document.createElement("section");
+  membership.style.cssText="margin-top:20px;padding:20px;border:1px solid #a78bfa66;border-radius:16px;background:linear-gradient(125deg,#a78bfa12,#20d66b0a)";
+  membership.innerHTML="<div style='display:flex;justify-content:space-between;align-items:center;gap:12px'><h2 style='margin:0;font-size:19px'>¿Quieres crear más clips?</h2><span style='border-radius:99px;padding:5px 10px;background:#a78bfa22;color:#d9cdfc;font-size:11px;font-weight:800'>Membresías próximamente</span></div><p style='color:#9eb1a2;font-size:13px'>El plan gratis permite crear 1 clip al día. Las cuentas, los pagos y el acceso de miembros todavía no están activos.</p><p style='color:#9eb1a2;font-size:13px'>El contador se guarda solo en este navegador; no se sincroniza entre dispositivos ni identifica usuarios. El dueño tendrá uso ilimitado cuando conectemos las cuentas.</p>";
+  studio.after(membership);
+  const refresh=function(){
+    const remaining=Math.max(0,LIMIT-used());
+    banner.textContent=remaining?"Te queda 1 clip gratis hoy en este navegador. El contador no se sincroniza entre dispositivos.":"Ya usaste tu clip gratis de hoy en este navegador. El límite se reinicia mañana.";
+    if(!button.disabled||used()>=LIMIT){button.disabled=remaining===0||!document.getElementById("videoFile").files.length;button.textContent=remaining?(document.getElementById("videoFile").files.length?"Analizar y crear 1 clip localmente":"Selecciona un video para empezar"):"Límite gratis de hoy alcanzado";}
+  };
+  button.addEventListener("click",function(event){
+    if(used()>=LIMIT){event.stopImmediatePropagation();status.textContent="Ya usaste tu clip gratis de hoy en este navegador.";refresh();return;}
+    if(count)count.value="1";
+  },true);
+  const observer=new MutationObserver(function(){
+    if(/^Listo:\s*[1-9]/.test(status.textContent||"")){try{localStorage.setItem(KEY,JSON.stringify({day:day(),count:1}));}catch(e){}}
+    refresh();
+  });
+  observer.observe(status,{childList:true,subtree:true,characterData:true});
+  if(video)video.addEventListener("loadedmetadata",function(){setTimeout(refresh,0);});
+  window.addEventListener("storage",refresh);
+  document.addEventListener("visibilitychange",refresh);
+  refresh();
+})();
+</script>
 </html>
