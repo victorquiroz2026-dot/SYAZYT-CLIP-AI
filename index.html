@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101014">
+  <title>SYAZYT CLIP AI — Crea clips de tus videos</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101014;--panel:#19191f;--line:#303039;--text:#f7f7fb;--muted:#a6a6b3;--purple:#a78bfa;--lime:#c5f36b}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 80% 0,#292044 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+    .wrap{width:min(1050px,92%);margin:auto}
+    header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff16}
+    .brand{font-weight:850;letter-spacing:.08em}.brand span{color:var(--purple)}
+    .tag{border:1px solid var(--line);border-radius:30px;padding:7px 12px;color:var(--muted);font-size:13px}
+    main{padding:72px 0 50px}
+    .eyebrow{color:var(--lime);text-transform:uppercase;letter-spacing:.18em;font-size:12px;font-weight:750}
+    h1{font-size:clamp(42px,8vw,76px);line-height:1.02;letter-spacing:-.055em;max-width:760px;margin:16px 0}
+    h1 span{color:var(--purple)}
+    .intro{color:var(--muted);font-size:18px;max-width:620px}
+    .studio{margin-top:42px;padding:24px;background:#19191fdc;border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 80px #0005}
+    .studio-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:18px}
+    h2{font-size:20px;margin:0}.status{font-size:12px;color:#e6cf79;background:#e6cf7918;padding:6px 10px;border-radius:20px}
+    .drop{display:block;padding:28px 18px;border:1px dashed #555461;border-radius:16px;text-align:center;background:#111116;cursor:pointer}
+    .drop:hover{border-color:var(--purple)}.icon{font-size:34px}.drop strong{display:block;margin:8px 0 3px}.hint,.fine{color:var(--muted);font-size:13px}
+    input[type=file]{position:absolute;width:1px;height:1px;opacity:0}
+    .controls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+    label.option{font-size:13px;color:var(--muted)}select{display:block;width:100%;margin-top:7px;padding:12px;background:#111116;color:var(--text);border:1px solid var(--line);border-radius:10px;font:inherit}
+    button{width:100%;padding:14px;border:0;border-radius:11px;background:#55535e;color:#c6c5cc;font:700 15px inherit}
+    .notice{margin:16px 0 0;padding:14px;border-radius:12px;background:#a78bfa12;color:#d9cdfc;font-size:13px}
+    footer{padding:28px 0 40px;border-top:1px solid #ffffff16;color:var(--muted);font-size:13px}
+    @media(max-width:600px){main{padding-top:48px}.studio{padding:17px}.controls{grid-template-columns:1fr}.tag{font-size:11px}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <div class="brand">SYAZYT <span>CLIP AI</span></div>
+    <div class="tag">ESTUDIO DE CLIPS</div>
+  </header>
+  <main class="wrap">
+    <div class="eyebrow">De video largo a momentos inolvidables</div>
+    <h1>Tus mejores momentos.<br><span>En clips.</span></h1>
+    <p class="intro">Prepara tus videos para crear clips verticales o panorámicos. Estamos construyendo el motor de inteligencia artificial.</p>
+
+    <section class="studio" aria-labelledby="studio-title">
+      <div class="studio-head">
+        <h2 id="studio-title">Prueba el estudio</h2>
+        <span class="status">Versión inicial</span>
+      </div>
+      <label class="drop" for="video">
+        <span class="icon">＋</span>
+        <strong>Selecciona un video</strong>
+        <span class="hint" id="filename">MP4, MOV o MKV · hasta 100 MB</span>
+      </label>
+      <input id="video" type="file" accept="video/mp4,video/quicktime,video/x-matroska,video/*">
+      <div class="controls">
+        <label class="option">Formato de salida
+          <select><option>Vertical · 9:16</option><option>Panorámico · 16:9</option><option>Cuadrado · 1:1</option></select>
+        </label>
+        <label class="option">Cantidad de clips
+          <select><option>3 clips</option><option>5 clips</option><option>10 clips</option></select>
+        </label>
+      </div>
+      <button type="button" disabled>El procesamiento estará disponible próximamente</button>
+      <p class="notice">Tu video se queda en tu dispositivo en esta versión. La subida segura y el procesamiento con IA aún no están conectados.</p>
+    </section>
+  </main>
+  <footer class="wrap">SYAZYT CLIP AI · Sitio en desarrollo</footer>
+  <script>
+    document.getElementById("video").addEventListener("change", function () {
+      document.getElementById("filename").textContent =
+        this.files.length ? this.files[0].name + " · seleccionado en este dispositivo" : "MP4, MOV o MKV · hasta 100 MB";
+    });
+  </script>
+</body>
+</html>
